@@ -1,0 +1,22 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AudioLink · Datos por sonido</title><link rel="stylesheet" href="css/styles.css"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#14203a"></head><body>
+<header><div><h1>AudioLink</h1><p>Transmisión de datos mediante ondas audibles · M-FSK</p></div><div id="estado" class="pill">Canal inactivo</div></header>
+<nav><button data-t="tx" class="on">Transmitir</button><button data-t="rx">Recibir</button><button data-t="hist">Historial</button></nav>
+<main>
+<section id="tx"><div class="card"><h2>Qué enviar</h2>
+ <label>Archivo (cualquier formato)<input type="file" id="file"></label>
+ <label>o un mensaje de texto<textarea id="txt" rows="3" placeholder="Escribe un mensaje…"></textarea></label>
+ <div class="row"><label>Velocidad<select id="prof"><option value="0">Robusto (~50 bps)</option><option value="1" selected>Normal (~100 bps)</option><option value="2">Rápido (~160 bps)</option></select></label>
+ <label>Rondas de repetición<input type="number" id="rounds" min="1" max="20" value="2"></label></div>
+ <label><input type="checkbox" id="arq"> Esperar confirmación del receptor (ARQ: usa micrófono y reenvía paquetes perdidos)</label>
+ <p id="info" class="muted">Sin archivo seleccionado.</p>
+ <div class="row"><button id="send" class="primary">Enviar por sonido</button><button id="pause" disabled>Pausar</button><button id="cancel" disabled>Cancelar</button></div></div>
+<div class="card"><h2>Señal emitida</h2><canvas id="scope" width="800" height="140"></canvas><div class="bar"><i id="txbar"></i></div><p id="txst" class="muted">Inactivo.</p></div></section>
+<section id="rx" hidden><div class="card"><h2>Escuchar</h2><p class="muted">Se pedirá permiso para usar el micrófono. Acerca los dispositivos y evita el ruido.</p>
+ <label><input type="checkbox" id="ackOn" checked> Enviar confirmaciones (ACK) por el parlante (necesario para el modo ARQ del emisor)</label>
+ <div class="row"><button id="mic" class="primary">Activar micrófono</button><button id="stop" disabled>Detener</button></div>
+ <canvas id="spec" width="800" height="160"></canvas>
+ <div class="stats"><div><b id="sNivel">–</b>Nivel</div><div><b id="sSync">–</b>Sincronía</div><div><b id="sSnr">–</b>SNR (dB)</div><div><b id="sPerf">–</b>Perfil</div><div><b id="sQual">–</b>Calidad*</div><div><b id="sPer">–</b>Pérdida (últ. 20)</div><div><b id="sOk">0</b>Tramas válidas</div><div><b id="sBad">0</b>Descartadas</div></div></div>
+<div class="card"><h2>Recepción</h2><div class="bar"><i id="rxbar"></i></div><p id="rxst" class="muted">Esperando transmisión…</p><div id="rxres"></div><p class="muted">*Umbral de calidad provisional (por SNR). Bits de la última trama:</p><code id="bits">–</code></div></section>
+<section id="hist" hidden><div class="card"><h2>Historial</h2><div class="scroll"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Nombre</th><th>Tamaño</th><th>Estado</th></tr></thead><tbody id="hb"></tbody></table></div><button id="clr">Borrar historial</button></div></section>
+</main><script type="module" src="js/main.js"></script></body></html>
